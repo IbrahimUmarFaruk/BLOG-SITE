@@ -154,3 +154,5 @@ DEBUG = os.getenv('DEBUG') == 'True'
 # Add the website domain where you will deploy (e.g., 'yourname.pythonanywhere.com')
 # For now, keep localhost and 127.0.0.1
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'BCG-BLOG.pythonanywhere.com']
+# This tells Django where to dump the collected files
+STATIC_ROOT = BASE_DIR / 'staticfiles'
