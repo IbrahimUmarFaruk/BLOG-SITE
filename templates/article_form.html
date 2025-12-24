@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if form.instance.pk %}Edit Article{% else %}New Article{% endif %} - BCG News
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5">
+                    
+                    <div class="mb-4">
+                        <h2 class="fw-bold">
+                            {% if form.instance.pk %}
+                                Edit Article
+                            {% else %}
+                                Write a New Story
+                            {% endif %}
+                        </h2>
+                        <p class="text-muted">
+                            {% if form.instance.pk %}
+                                Update your content below.
+                            {% else %}
+                                Share your thoughts with the world.
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="mb-4">
+                            {{ form.as_p }}
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+                            
+                            {% if form.instance.pk %}
+                                <a href="{% url 'article_detail' form.instance.pk %}" class="btn btn-outline-secondary rounded-pill px-4">
+                                    Cancel
+                                </a>
+                            {% else %}
+                                <a href="{% url 'article_list' %}" class="btn btn-outline-secondary rounded-pill px-4">
+                                    Cancel
+                                </a>
+                            {% endif %}
+                            
+                            <button type="submit" class="btn btn-success rounded-pill px-4 shadow-sm">
+                                {% if form.instance.pk %}
+                                    Save Changes
+                                {% else %}
+                                    Publish Article
+                                {% endif %}
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Spacing for labels and fields */
+    form p { margin-bottom: 1.5rem; }
+    
+    /* Label Styling */
+    form label { 
+        display: block; 
+        margin-bottom: 0.5rem; 
+        font-weight: 600; 
+        color: #495057; 
+    }
+    
+    /* Input & Textarea Styling */
+    form input, form textarea, form select {
+        display: block;
+        width: 100%;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        color: #212529;
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 0.5rem;
+        transition: all 0.2s ease-in-out;
+    }
+
+    /* Make the body text area taller */
+    form textarea {
+        min-height: 200px;
+        resize: vertical;
+    }
+    
+    /* Focus State */
+    form input:focus, form textarea:focus, form select:focus {
+        background-color: #fff;
+        border-color: #198754; 
+        outline: 0;
+        box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+    }
+    
+    /* Help text styling */
+    form .helptext { display: block; margin-top: 0.25rem; font-size: 0.875em; color: #6c757d; }
+    
+    /* Current File Link Styling (for image fields) */
+    form a { text-decoration: none; color: #0d6efd; }
+    form a:hover { text-decoration: underline; }
+</style>
+{% endblock content %}

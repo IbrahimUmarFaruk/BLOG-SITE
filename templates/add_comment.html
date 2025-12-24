@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Add Comment - BCG News{% endblock title %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5">
+                    
+                    <div class="text-center mb-4">
+                        <h2 class="fw-bold">Join the Conversation</h2>
+                        <p class="text-muted">What are your thoughts on this story?</p>
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-4">
+                            {{ form.as_p }}
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm">
+                                Post Comment
+                            </button>
+                            
+                            <a href="{% url 'article_detail' view.kwargs.pk %}" class="btn btn-link text-decoration-none text-muted">
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Remove default bullet points/margins from form paragraphs */
+    form p { margin-bottom: 1.5rem; }
+    
+    /* Style Labels */
+    form label { 
+        display: block; 
+        margin-bottom: 0.5rem; 
+        font-weight: 600; 
+        color: #495057; 
+    }
+    
+    /* Style Textarea */
+    form textarea {
+        display: block;
+        width: 100%;
+        min-height: 150px;
+        padding: 1rem;
+        font-size: 1rem;
+        border: 1px solid #dee2e6;
+        border-radius: 0.75rem;
+        background-color: #f8f9fa;
+        resize: vertical;
+        transition: all 0.2s;
+    }
+
+    /* Focus Effect */
+    form textarea:focus {
+        background-color: #fff;
+        border-color: #0d6efd;
+        outline: 0;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    }
+</style>
+{% endblock content %}

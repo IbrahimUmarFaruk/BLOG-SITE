@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Log In - BCG News{% endblock title %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5">
+                    
+                    <h2 class="text-center fw-bold mb-2">Welcome Back</h2>
+                    <p class="text-center text-muted mb-4">Please log in to continue</p>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            {{ form.as_p }}
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm">
+                                Log In
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card-footer bg-light border-0 py-3 text-center rounded-bottom-4">
+                    <p class="mb-0 text-muted">
+                        Don't have an account? 
+                        <a href="{% url 'signup' %}" class="text-primary text-decoration-none fw-bold">Sign Up</a>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Styling for form paragraphs and labels */
+    form p { margin-bottom: 1rem; }
+    form label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #555; }
+    
+    /* Styling for the input fields */
+    form input {
+        display: block;
+        width: 100%;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        color: #212529;
+        background-color: #fff;
+        border: 1px solid #ced4da;
+        border-radius: 0.5rem; /* Rounded corners for inputs */
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+    
+    /* Focus state (blue glow) */
+    form input:focus {
+        border-color: #86b7fe;
+        outline: 0;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    }
+</style>
+{% endblock content %}

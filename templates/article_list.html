@@ -1,0 +1,474 @@
+{% extends "base.html" %}
+
+{% comment %}
+{% block content %}
+{% block title %}Articles -BCG{% endblock title %}
+   <h1>Articles</h1>
+   {% for article in object_list %}
+   
+      <div class="card mb-3">
+        <div class="card-body">
+          <h3><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h3>
+          <p class="text-muted">{{ article.created_at|date:'F j, Y' }}</p>
+          <p>{{ article.content|truncatewords:30 }}</p>
+        </div>
+    </div>
+     <div class="card">
+           <h3><a href="">{{ article.title }}</a></h3> 
+           <p>{{ article.body }}</p>
+           <small>Written by: {{ article.author }}</small>
+           <br><br>
+    </div>
+  {% empty %}
+   <p>No articles yet.</p>
+  {% endfor %}
+  {% comment %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Articles</h1>
+        <a href="{% url 'article_new' %}" class="btn btn-primary">+ New Article</a>
+    </div>
+
+    {% for article in object_list %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h2 class="card-title">
+                    <a href="{% url 'article_detail' article.pk %}">{{ article.title }}</a>
+                </h2>
+                <p class="card-text">{{ article.content|truncatewords:30 }}</p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock content %}
+
+
+{% block content %}
+
+  <div class="row">
+    <div class="col-md-8 offset-md-2"> <h1 class="mb-4">Latest Articles</h1>
+
+      {% for article in object_list %}
+        <div class="card mb-3 shadow-sm"> <div class="card-body">
+            
+            <h2 class="card-title">
+              <a href="#" class="text-decoration-none text-dark">{{ article.title }}</a>
+            </h2>
+            
+            <p class="text-muted small">
+              Written by <strong>{{ article.author }}</strong>
+            </p>
+
+            <p class="card-text">{{ article.body }}</p>
+
+            <a href="#" class="btn btn-primary btn-sm">Read More</a>
+          </div>
+        </div>
+      {% empty %}
+        <div class="alert alert-info" role="alert">
+          No articles yet. Be the first to write one!
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
+{% endblock content %}
+<h2 class="card-title">
+    <a href="{% url 'article_detail' article.pk %}" class="text-decoration-none text-dark">
+        {{ article.title }}
+    </a>
+</h2>
+
+<a href="{% url 'article_detail' article.pk %}" class="btn btn-primary btn-sm">Read More ></a>
+<a href="{% url 'article_detail' article.pk %}">
+    {{ article.title }}
+</a>
+
+{% block content %}
+
+  <div class="row">
+    <div class="col-md-8 offset-md-2"> 
+      
+      <h1 class="mb-4">Latest Articles</h1>
+
+      {% for article in object_list %}
+        <div class="card mb-3 shadow-sm"> 
+          <div class="card-body">
+            
+            <h2 class="card-title">
+              <a href="{% url 'article_detail' article.pk %}" class="text-decoration-none text-dark">
+                {{ article.title }}
+              </a>
+            </h2>
+            
+            <p class="text-muted small">
+              Written by <strong>{{ article.author }}</strong>
+            </p>
+
+            <p class="card-text">{{ article.body }}</p>
+
+            <a href="{% url 'article_detail' article.pk %}" class="btn btn-primary btn-sm">Read More ></a>
+          
+          </div>
+        </div>
+      {% empty %}
+        <div class="alert alert-info" role="alert">
+          No articles yet. Be the first to write one!
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
+{% endblock content %}
+{% endcomment %}
+
+{% comment %}
+
+{% extends "base.html" %}
+
+{% block title %}Home - BCG News{% endblock title %} 
+{% block content %}
+
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h1 class="mb-4">Latest Articles</h1>
+
+        <form action="{% url 'search' %}" method="get" class="mb-4 d-flex">
+            <input name="q" class="form-control me-2" type="search" placeholder="Search..." aria-label="Search">
+            <button class="btn btn-outline-primary" type="submit">Search</button>
+        </form>
+
+        {% for article in articles %}
+            <div class="card mb-3 shadow-sm">
+                <div class="card-body">
+                    <h2 class="card-title h4">
+                        <a href="{% url 'article_detail' article.slug %}" class="text-decoration-none text-dark">
+                            {{ article.title }}
+                        </a>
+                    </h2>
+                    <p class="text-muted small">
+                        {{ article.created_at|date:"F j, Y" }}
+                    </p>
+                    <p class="card-text">{{ article.content|truncatewords:30 }}</p>
+                    <a href="{% url 'article_detail' article.slug %}" class="btn btn-primary btn-sm">Read More >></a>
+                </div>
+            </div>
+        {% empty %}
+            <div class="alert alert-info">
+                No articles found. <a href="{% url 'article_new' %}">Create one here!</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
+{% endcomment %}
+
+{% comment %}
+{% block title %}Articles - BCG News{% endblock title %} 
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        
+        <h1 class="mb-4">Latest Articles</h1>
+
+        <form action="{% url 'search' %}" method="get" class="mb-4 d-flex">
+            <input name="q" class="form-control me-2" type="search" placeholder="Search..." aria-label="Search">
+            <button class="btn btn-outline-primary" type="submit">Search</button>
+        </form>
+
+        {% for article in object_list %}
+            <div class="card mb-3 shadow-sm">
+                <div class="card-body">
+                    
+                    <h2 class="card-title h4">
+                        <a href="{% url 'article_detail' article.pk %}" class="text-decoration-none text-dark">
+                            {{ article.title }}
+                        </a>
+                    </h2>
+                    
+                    <p class="text-muted small">
+                        Written by <strong>{{ article.author }}</strong> on {{ article.created_at|date:"F j, Y" }}
+                    </p>
+                    
+                    <p class="card-text">{{ article.body|truncatewords:30 }}</p>
+                    
+                    <a href="{% url 'article_detail' article.pk %}" class="btn btn-primary btn-sm">Read More >></a>
+                </div>
+            </div>
+        {% empty %}
+            <div class="alert alert-info">
+                No articles found. <a href="{% url 'article_new' %}">Create one here!</a>
+            </div>
+        {% endfor %}
+        
+    </div>
+</div>
+{% endblock content %}
+{% endcomment %}
+
+{% comment %}
+{% block title %}Articles - BCG News{% endblock title %} 
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">Latest Articles</h1>
+    
+    {% if user.is_authenticated %}
+        <a href="{% url 'article_new' %}" class="btn btn-primary">+ New Article</a>
+    {% endif %}
+</div>
+        
+        <form action="{% url 'search' %}" method="get" class="mb-4 d-flex">
+            <input name="q" class="form-control me-2" type="search" placeholder="Search..." aria-label="Search">
+            <button class="btn btn-outline-primary" type="submit">Search</button>
+        </form>
+
+        {% for article in object_list %}
+            <div class="card mb-3 shadow-sm">
+                <div class="card-body">
+                    
+                    <h2 class="card-title h4">
+                        <a href="{% url 'article_detail' article.pk %}" class="text-decoration-none text-dark">
+                            {{ article.title }}
+                        </a>
+                    </h2>
+                    
+                    <p class="text-muted small">
+                        Written by <strong>{{ article.author }}</strong> on {{ article.created_at|date:"F j, Y" }}
+                    </p>
+                    
+                    <p class="card-text">{{ article.body|truncatewords:30 }}</p>
+                    
+                    <a href="{% url 'article_detail' article.pk %}" class="btn btn-primary btn-sm">Read More >></a>
+                </div>
+            </div>
+        {% empty %}
+            <div class="alert alert-info">
+                No articles found. <a href="{% url 'article_new' %}">Create one here!</a>
+            </div>
+        {% endfor %}
+        
+    </div>
+</div>
+{% endblock content %}
+{% endcomment %}
+
+{% comment %}
+{% block title %}Articles - BCG News{% endblock title %} 
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1 class="fw-bold mb-0">Latest Articles</h1>
+                    <p class="text-muted small mb-0">Discover stories from our community</p>
+                </div>
+                
+                {% if user.is_authenticated %}
+                    <a href="{% url 'article_new' %}" class="btn btn-primary rounded-pill px-4 shadow-sm">
+                        + New Article
+                    </a>
+                {% endif %}
+            </div>
+            
+            <div class="card border-0 shadow-sm rounded-4 mb-5 bg-light">
+                <div class="card-body p-2">
+                    <form action="{% url 'search' %}" method="get" class="d-flex">
+                        <input name="q" class="form-control border-0 bg-transparent shadow-none" type="search" placeholder="Search for topics, authors..." aria-label="Search">
+                        <button class="btn btn-primary rounded-pill px-4" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+
+            {% for article in object_list %}
+                <div class="card border-0 shadow-sm rounded-4 mb-4 card-hover overflow-hidden">
+                    <div class="card-body p-4">
+                        
+                        <h2 class="card-title h4 fw-bold mb-2">
+                            <a href="{% url 'article_detail' article.pk %}" class="text-decoration-none text-dark stretched-link">
+                                {{ article.title }}
+                            </a>
+                        </h2>
+                        
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="text-muted small">
+                                <span class="fw-bold text-primary">{{ article.author }}</span> 
+                                <span class="mx-1">&bull;</span> 
+                                {{ article.created_at|date:"F j, Y" }}
+                            </div>
+                        </div>
+                        
+                        <p class="card-text text-secondary mb-0">
+                            {{ article.body|truncatewords:40 }}
+                        </p>
+
+                    </div>
+                    <div class="card-footer bg-transparent border-0 pt-0 pb-4 px-4">
+                        <span class="text-primary fw-bold small">Read article >></span>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="text-center py-5">
+                    <h4 class="text-muted">No articles found.</h4>
+                    <p class="text-muted">Try a different search or start writing!</p>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'article_new' %}" class="btn btn-outline-primary rounded-pill mt-2">Create Article</a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <div class="text-center mt-5 pt-5 border-top">
+                <small class="text-muted text-uppercase fw-bold" style="font-size: 0.7rem; letter-spacing: 1px;">
+                    Developer: Ibrahim Umar-Faruq Zaki
+                </small>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endcomment %}
+
+{% block title %}Home - BCG News{% endblock title %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    
+    <div class="p-5 mb-4 bg-light rounded-4 shadow-sm text-center">
+        <h1 class="display-5 fw-bold">Welcome to BCG News</h1>
+        <p class="col-md-8 fs-4 mx-auto text-muted">
+            Discover the latest stories, updates, and insights from our community.
+        </p>
+        {% if user.is_authenticated %}
+            <a class="btn btn-primary btn-lg rounded-pill px-4 mt-3" href="{% url 'article_new' %}">
+                Write a Story
+            </a>
+        {% else %}
+            <a class="btn btn-outline-primary btn-lg rounded-pill px-4 mt-3" href="{% url 'signup' %}">
+                Join Now
+            </a>
+        {% endif %}
+    </div>
+
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-6">
+            <form action="{% url 'search' %}" method="get" class="d-flex gap-2">
+                <input class="form-control form-control-lg rounded-pill" type="text" name="q" placeholder="Search articles...">
+                <button class="btn btn-dark rounded-circle" type="submit" style="width: 50px; height: 50px;">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            {% for article in articles %}
+                <div class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden">
+                    <div class="row g-0">
+                        {% if article.image %}
+                        <div class="col-md-4">
+                            <img src="{{ article.image.url }}" class="img-fluid h-100 object-fit-cover" style="min-height: 200px;" alt="{{ article.title }}">
+                        </div>
+                        {% endif %}
+                        
+                        <div class="col-md-{% if article.image %}8{% else %}12{% endif %}">
+                            <div class="card-body p-4">
+                                <h3 class="card-title fw-bold">
+                                    <a href="{% url 'article_detail' article.pk %}" class="text-decoration-none text-dark">
+                                        {{ article.title }}
+                                    </a>
+                                </h3>
+                                <p class="card-text text-muted">
+                                    {{ article.body|truncatewords:30 }}
+                                </p>
+                                <p class="card-text">
+                                    <small class="text-muted">
+                                        By <strong>{{ article.author }}</strong> &bull; {{ article.created_at|date:"M d, Y" }}
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="text-center py-5">
+                    <p class="text-muted">No articles found. Be the first to write one!</p>
+                </div>
+            {% endfor %}
+
+            {% if is_paginated %}
+            <nav aria-label="Page navigation" class="mt-5">
+                <ul class="pagination justify-content-center">
+                    
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link rounded-pill px-3 me-2" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <span class="page-link rounded-pill px-3 me-2">Previous</span>
+                        </li>
+                    {% endif %}
+
+                    <li class="page-item disabled">
+                        <span class="page-link border-0 bg-transparent text-muted">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                        </span>
+                    </li>
+
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link rounded-pill px-3 ms-2" href="?page={{ page_obj.next_page_number }}">Next</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <span class="page-link rounded-pill px-3 ms-2">Next</span>
+                        </li>
+                    {% endif %}
+                    
+                </ul>
+            </nav>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Makes the card lift up slightly on hover */
+    .card-hover {
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important;
+    }
+
+    /* Customizing the search input */
+    input[type="search"]::placeholder {
+        color: #adb5bd;
+    }
+    
+    /* Stretched link fix: Makes the whole card clickable */
+    .stretched-link::after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        content: "";
+    }
+    /* Ensure buttons inside the card (like edit) would still work if added later */
+    .card-hover { position: relative; }
+</style>
+{% endblock content %}

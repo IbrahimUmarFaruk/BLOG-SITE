@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article.title }} - BCG News{% endblock title %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            
+            <div class="mb-4">
+                <a href="{% url 'article_list' %}" class="text-decoration-none text-muted">
+                    &larr; Back to Articles
+                </a>
+            </div>
+
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5">
+                    
+                    <h1 class="fw-bold mb-3 display-5">{{ article.title }}</h1>
+                    
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="avatar-circle bg-primary text-white me-2">
+                            {{ article.author.username|slice:":1"|upper }}
+                        </div>
+                        <div class="text-muted small">
+                            Written by <strong class="text-dark">{{ article.author }}</strong>
+                        </div>
+                    </div>
+
+                    <hr class="mb-4 text-muted opacity-25">
+
+                    {% if article.image %}
+                        <div class="mb-4">
+                            <img src="{{ article.image.url }}" class="img-fluid rounded-4 w-100 shadow-sm" alt="{{ article.title }}">
+                        </div>
+                    {% endif %}
+
+                    <div class="article-content text-dark lh-lg">
+                        {{ article.body|linebreaks }}
+                    </div>
+
+                    {% if user.is_authenticated and user == article.author %} 
+                        <div class="mt-5 pt-4 border-top">
+                            <p class="small text-uppercase text-muted fw-bold mb-2">Manage Article</p>
+                            <div class="d-flex gap-2">
+                                <a href="{% url 'article_edit' article.pk %}" class="btn btn-outline-warning rounded-pill px-4">
+                                    Edit
+                                </a>
+                                <a href="{% url 'article_delete' article.pk %}" class="btn btn-outline-danger rounded-pill px-4">
+                                    Delete
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                </div>
+            </div>
+
+            <div class="mt-5">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="fw-bold m-0">COMMENT {% comment %}({{ article.comments.count }}){% endcomment %}</h3>
+                    <a href="{% url 'add_comment' article.pk %}" class="btn btn-primary rounded-pill px-4">
+                        + Add Comment
+                    </a>
+                </div>
+                
+                {% for comment in article.comments.all %}
+                    <div class="card shadow-sm border-0 rounded-4 mb-3">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="avatar-circle-sm bg-secondary text-white me-2">
+                                    {{ comment.author.username|slice:":1"|upper }}
+                                </div>
+                                <h6 class="fw-bold m-0">{{ comment.author }}</h6>
+                            </div>
+                            <p class="text-muted mb-0 ms-1">{{ comment.comment }}</p>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="text-center py-4 bg-light rounded-4">
+                        <p class="text-muted mb-0">No comments yet. Be the first to start the conversation!</p>
+                    </div>
+                {% endfor %}
+            </div>
+            </div>
+    </div>
+</div>
+
+<style>
+    /* Main Author Avatar */
+    .avatar-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+    
+    /* Smaller Commenter Avatar */
+    .avatar-circle-sm {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 0.9rem;
+    }
+
+    .article-content {
+        font-size: 1.1rem;
+        color: #2c3e50;
+    }
+</style>
+{% endblock content %}

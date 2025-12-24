@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}New Article - BCG News{% endblock title %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5">
+                    
+                    <div class="mb-4">
+                        <h2 class="fw-bold">Write a New Story</h2>
+                        <p class="text-muted">Share your thoughts with the world.</p>
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-4">
+                            <label for="{{ form.title.id_for_label }}" class="form-label">Title:</label>
+                            {{ form.title }}
+                            <div class="text-danger small">{{ form.title.errors }}</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="{{ form.body.id_for_label }}" class="form-label">Body:</label>
+                            {{ form.body }}
+                            <div class="text-danger small">{{ form.body.errors }}</div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <a href="{% url 'article_list' %}" class="btn btn-outline-secondary rounded-pill px-4">
+                                Cancel
+                            </a>
+                            <button type="submit" class="btn btn-success rounded-pill px-4 shadow-sm">
+                                Publish Article
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Spacing for labels and fields */
+    form p { margin-bottom: 1.5rem; }
+    
+    /* Label Styling */
+    form label { 
+        display: block; 
+        margin-bottom: 0.5rem; 
+        font-weight: 600; 
+        color: #495057; 
+    }
+    
+    /* Input & Textarea Styling */
+    form input, form textarea, form select {
+        display: block;
+        width: 100%;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        color: #212529;
+        background-color: #f8f9fa; /* Slight grey background for inputs */
+        border: 1px solid #dee2e6;
+        border-radius: 0.5rem;
+        transition: all 0.2s ease-in-out;
+    }
+
+    /* Make the body text area taller by default */
+    form textarea {
+        min-height: 200px;
+        resize: vertical;
+    }
+    
+    /* Focus State */
+    form input:focus, form textarea:focus, form select:focus {
+        background-color: #fff;
+        border-color: #198754; /* Green focus for 'Success' theme */
+        outline: 0;
+        box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+    }
+    
+    /* Help text styling */
+    form .helptext { display: block; margin-top: 0.25rem; font-size: 0.875em; color: #6c757d; }
+</style>
+{% endblock content %}
