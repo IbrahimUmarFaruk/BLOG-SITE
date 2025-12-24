@@ -47,6 +47,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         # Automatically set the author to the logged-in user
         form.instance.author = self.request.user
+        form.instance.published = True
         return super().form_valid(form)
 
 class ArticleUpdateView(LoginRequiredMixin, UpdateView):
